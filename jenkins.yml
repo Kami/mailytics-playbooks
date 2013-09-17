@@ -15,6 +15,10 @@
        - nodejs
        - npm
 
+       - binutils
+       - libproj-dev
+       - gdal-bin
+
    - name: Install Python packages
      action: pip name=$item
      with_items:
