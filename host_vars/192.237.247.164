@@ -4,3 +4,4 @@ plugins:
   - 'ghprb'
   - 'translation'
   - 'preSCMbuildstep'
+  - 'envinject'
