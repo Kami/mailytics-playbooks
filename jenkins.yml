@@ -18,6 +18,7 @@
        - binutils
        - libproj-dev
        - gdal-bin
+       - sqlite3
 
    - name: Install Python packages
      action: pip name=$item
