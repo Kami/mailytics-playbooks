@@ -1,0 +1,5 @@
+---
+nginx:
+  server_name: 'ci.tomaz.me'
+  cert_file: '/etc/ssl/ci.tomaz.me.bundled.crt'
+  cert_key_file: '/etc/ssl/private/ci.tomaz.me.key'
