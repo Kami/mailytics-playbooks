@@ -4,3 +4,6 @@ common:
     - htop
     - iftop
     - screen
+    - git
+    - supervisor
+    - python-pip
