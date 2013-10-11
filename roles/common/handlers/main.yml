@@ -1,0 +1,6 @@
+---
+- name: reload supervisor
+  shell: /usr/bin/supervisorctl reread && /usr/bin/supervisorctl update
+
+- name: restart supervised processes
+  shell: /usr/bin/supervisorctl restart ${project_name}
