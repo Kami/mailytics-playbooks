@@ -1,0 +1,6 @@
+---
+- name: Install common system packages
+  apt: pkg=${item} state=installed update-cache=yes
+  with_items: ${common.packages}
+  tags:
+    - packages
