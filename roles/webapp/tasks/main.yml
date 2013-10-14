@@ -1,0 +1,3 @@
+---
+- name: ensure virtualenv is installed and latest version
+  pip: name=virtualenv
