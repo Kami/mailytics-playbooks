@@ -5,5 +5,11 @@
   tags:
     - packages
 
-- name: Install customer sudoers config
-  copy: src=sudoers.conf dest=/etc/sudoers.d/0001-preserve-auth-sock.conf validate='visudo -cf %s'
+- name: Make sure ~/.ssh/known_hosts exists
+  shell: touch /root/.ssh/known_hosts
+
+- name: Install known_hosts file
+  copy: src=known_hosts dest=/root/.ssh/known_hosts
+
+- name: Install custom sudoers config
+  copy: src=sudoers.conf dest=/etc/sudoers.d/0001-preserve-auth-sock validate='visudo -cf %s'
