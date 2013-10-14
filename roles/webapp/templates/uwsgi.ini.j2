@@ -1,0 +1,33 @@
+[uwsgi]
+# Django-related settings
+env = DJANGO_SETTINGS_MODULE=configs.{{ environment }}.settings
+
+# the base directory (full path)
+chdir           = {{ project_root }}/webapp
+# Django's wsgi file
+module          = configs.{{ environment }}.wsgi
+# the virtualenv (full path)
+home            = {{ project_root }}/virtualenv
+
+# process-related settings
+# master
+master          = true
+# maximum number of worker processes
+processes       = 8
+threads         = 4
+enable-threads  = true
+auto-procname = true
+#procname-prefix = cspreeprod
+# the socket (use the full path to be safe)
+socket          = {{ project_root }}/uwsgi.sock
+chmod-socket    = 666
+# clear environment on exit
+vacuum          = true
+# don't log, it's noisy
+disable-logging = true
+
+# Misc
+# defaults to 100
+listen          = 128
+
+touch-reload    = {{ project_root }}/deployment
