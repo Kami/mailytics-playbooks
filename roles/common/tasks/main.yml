@@ -4,3 +4,6 @@
   with_items: ${common.packages}
   tags:
     - packages
+
+- name: Install customer sudoers config
+  copy: src=sudoers.conf dest=/etc/sudoers.d/0001-preserve-auth-sock.conf validate='visudo -cf %s'
