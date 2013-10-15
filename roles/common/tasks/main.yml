@@ -12,4 +12,4 @@
   copy: src=known_hosts dest=/root/.ssh/known_hosts
 
 - name: Install custom sudoers config
-  copy: src=sudoers.conf dest=/etc/sudoers.d/0001-preserve-auth-sock validate='visudo -cf %s'
+  copy: src=sudoers.conf dest=/etc/sudoers.d/0001-preserve-auth-sock validate='visudo -cf %s' mode=0440
