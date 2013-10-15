@@ -1,3 +1,6 @@
 [submodule "roles/cassandra"]
 	path = roles/cassandra
 	url = git@github.com:Kami/ansible-cassandra.git
+[submodule "roles/postgresql"]
+	path = roles/postgresql
+	url = git@github.com:Kami/ansible-postgresql.git
