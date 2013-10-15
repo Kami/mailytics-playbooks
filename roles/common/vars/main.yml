@@ -6,4 +6,6 @@ common:
     - screen
     - git
     - supervisor
+    - python
+    - python-dev
     - python-pip
