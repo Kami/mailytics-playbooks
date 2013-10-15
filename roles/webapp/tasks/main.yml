@@ -1,3 +1,6 @@
 ---
+- name: Install private SSH key
+  copy: src=id_rsa.key dest=/root/.ssh/id_rsa mode=0600
+
 - name: ensure virtualenv is installed and latest version
   pip: name=virtualenv
