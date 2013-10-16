@@ -6,17 +6,25 @@
   file: state=directory path=${project.root} owner=${project.user} group=${project.user}
 
 - name: Create project directories
-  file: state=directory path=${project.root}/${item}/ owner=${project.user} group=${project.user}
+  file: state=directory path=${project.root}/${item.name}/ owner=${project.user} group=${project.user} mode=${item.mode}
   with_items:
-    - logs
-    - virtualenv
-    - configs
-    - webapp
-    - static
-    - uploads
+    - { "name": "logs", "mode": "0744"}
+    - { "name": "virtualenv", "mode": "0744"}
+    - { "name": "configs", "mode": "0744"}
+    - { "name": "private", "mode": "0440"}
+    - { "name": "webapp", "mode": "0744"}
+    - { "name": "static", "mode": "0744"}
+    - { "name": "uploads", "mode": "0744"}
 
-- name: Install admin htpasswd file
-  copy: src=${project.environment}/.htpasswd-admin dest=${project.root}/configs/.htpasswd-admin
+- name: Change permissions for private directory
+  file: state=directory path=${project.root}/private/ owner=${project.user} group=${project.user} mode=0440
+
+- name: Install secret files
+  copy: src=${project.environment}/${item} dest=${project.root}/private/${item} owner=${project.user} group=${project.user} mode=0440
+  with_items:
+    - htpasswd-admin
+    - localhost.crt
+    - localhost.key
 
 - name: Install supervisor config
   action: template src=supervisor.conf.j2 dest=/etc/supervisor/conf.d/${project.name}.conf
