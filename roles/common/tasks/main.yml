@@ -5,8 +5,8 @@
   tags:
     - packages
 
-- name: Make sure ~/.ssh/known_hosts exists
-  shell: touch /root/.ssh/known_hosts
+- name: Create ~/.ssh directory
+  file: path=/root/.ssh state=directory
 
 - name: Install known_hosts file
   copy: src=known_hosts dest=/root/.ssh/known_hosts

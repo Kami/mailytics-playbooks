@@ -1,7 +1,4 @@
 ---
-- name: Create user account
-  user: name=${project.user} state=present
-
 - name: Create main project directory
   file: state=directory path=${project.root} owner=${project.user} group=${project.user} mode=0755
 
@@ -23,15 +20,11 @@
     - localhost.crt
     - localhost.key
 
-- name: Install Python configs
-  action: template src=${item.src} dest=${project.root}/webapp/mailytics/configs/${item.dest} owner=${project.user} group=${project.user}
-  with_items:
-    - { "src": "settings.py.j2", "dest": "local_settings.py" }
-    - { "src": "wsgi.py.j2", "dest": "wsgi.py" }
-
 - name: Install templatized config files
   action: template src=${item.src} dest=${item.dest} owner=${item.owner} group=${item.group}
   with_items:
+    - { "src": "settings.py.j2", "dest": "${project.root}/configs/settings.py", "owner": "${project.user}", "group": "${project.user}" }
+    - { "src": "wsgi.py.j2", "dest": "${project.root}/configs/wsgi.py", "owner": "${project.user}", "group": "${project.user}" }
     - { "src": "uwsgi_params.j2", "dest": "${project.root}/configs/uwsgi_params", "owner": "${project.www_user}", "group": "${project.www_group}" }
     - { "src": "nginx.conf.j2", "dest": "/etc/nginx/conf.d/mailytics.conf", "owner": "root", "group": "root" }
     - { "src": "supervisor.conf.j2", "dest": "/etc/supervisor/conf.d/${project.name}.conf", "owner": "root", "group": "root" }
@@ -39,6 +32,12 @@
 
 - name: Pull source from the repository
   git: repo=${project.repo} dest=${project.root}/webapp/ version=${project.revision} update=yes force=yes
+
+- name: Symlink Python configs
+  file: src=${item.src} dest=${item.dest} state=link force=yes
+  with_items:
+    - { "src": "${project.root}/configs/settings.py", "dest": "${project.root}/webapp/mailytics/configs/local_settings.py" }
+    - { "src": "${project.root}/configs/wsgi.py", "dest": "${project.root}/webapp/mailytics/configs/wsgi.py" }
 
 - name: Install requirements
   pip: requirements=${project.root}/webapp/requirements.txt virtualenv=${project.root}/virtualenv
