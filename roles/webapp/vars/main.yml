@@ -2,7 +2,7 @@
 project:
   repo: git@github.com:Kami/mailytics-webapp.git
   root: /data-deploy/mailytics
-  name: mailytics
+  name: mailytics_webapp
   user: mailyticswebapp
   environment: common
   revision: master
