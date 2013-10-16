@@ -6,3 +6,6 @@ project:
   user: mailyticswebapp
   environment: development
   revision: master
+
+  www_user: nginx
+  www_group: nginx
