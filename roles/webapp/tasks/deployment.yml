@@ -2,6 +2,9 @@
 - name: Create user account
   user: name=${project.user} state=present
 
+- name: Create main project directory
+  file: state=directory path=${project.root} owner=${project.user} group=${project.user}
+
 - name: Create project directories
   file: state=directory path=${project.root}/${item}/ owner=${project.user} group=${project.user}
   with_items:
@@ -15,7 +18,7 @@
   action: template src=supervisor.conf.j2 dest=/etc/supervisor/conf.d/${project.name}.conf
 
 - name: Install uwsgi config
-  action: template src=uwsgi.ini.j2 dest=${project.root}/configs/uwsgi.ini
+  action: template src=uwsgi.ini.j2 dest=${project.root}/configs/uwsgi.ini owner=${project.user} group=${project.user}
 
 - name: Pull source from the repository
   git: repo=${project.repo} dest=${project.root}/webapp/ version=${project.revision} update=yes force=yes
