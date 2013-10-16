@@ -4,5 +4,5 @@ project:
   root: /data-deploy/mailytics
   name: mailytics
   user: mailyticswebapp
-  environment: production
+  environment: common
   revision: master
