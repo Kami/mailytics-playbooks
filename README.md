@@ -1,7 +1,8 @@
-# Mailytics CI server
+# Mailytics Ansible Playbooks
 
-# 1. Setting up Jenkins
+## Available Playboks
 
-```bash
-ansible-playbook -i ansible.host ansible-jenkins/setup.yml
-```
+* `web_servers.yml` - Webapp + PostgreSQL + API service
+* `cassandra_servers.yml` - Cassandra
+* `token_storage_servers.yml` - Token storage service
+* `worker_servers` - Worker jobs
