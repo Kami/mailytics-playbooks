@@ -2,5 +2,8 @@
 - name: Install private SSH key
   copy: src=id_rsa.key dest=/root/.ssh/id_rsa mode=0600
 
-- name: ensure virtualenv is installed and latest version
+- name: Ensure virtualenv is installed and latest version
   pip: name=virtualenv
+
+- name: Install pgbouncer
+  apt: pkg=pgbouncer state=installed update-cache=yes
