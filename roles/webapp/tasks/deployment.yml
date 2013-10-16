@@ -16,7 +16,7 @@
     - { "name": "static", "mode": "0755"}
     - { "name": "uploads", "mode": "0755"}
 
-- name: Install private webserver files
+- name: Install webserver files
   copy: src=${project.environment}/${item} dest=${project.root}/private/${item} owner=${project.www_user} group=${project.www_group} mode=0400
   with_items:
     - htpasswd-admin
@@ -29,17 +29,13 @@
     - { "src": "settings.py.j2", "dest": "local_settings.py" }
     - { "src": "wsgi.py.j2", "dest": "wsgi.py" }
 
-- name: Install uwsgi_params file
-  copy: src=uwsgi_params dest=${project.root}/configs/uwsgi_params owner=${project.www_user} group=${project.www_group}
-
-- name: Install nginx config
-  action: template src=nginx.conf.j2 dest=/etc/nginx/conf.d/mailytics.conf owner=root group=root
-
-- name: Install supervisor config
-  action: template src=supervisor.conf.j2 dest=/etc/supervisor/conf.d/${project.name}.conf
-
-- name: Install uwsgi config
-  action: template src=uwsgi.ini.j2 dest=${project.root}/configs/uwsgi.ini owner=${project.user} group=${project.user}
+- name: Install templatized config files
+  action: template src=${item.src} dest=${item.dest} owner=${item.owner} group=${item.group}
+  with_items:
+    - { "src": "uwsgi_params.j2", "dest": "${project.root}/configs/uwsgi_params", "owner": "${project.www_user}", "group": "${project.www_group}" }
+    - { "src": "nginx.conf.j2", "dest": "/etc/nginx/conf.d/mailytics.conf", "owner": "root", "group": "root" }
+    - { "src": "supervisor.conf.j2", "dest": "/etc/supervisor/conf.d/${project.name}.conf", "owner": "root", "group": "root" }
+    - { "src": "uwsgi.ini.j2", "dest": "${project.root}/configs/uwsgi.ini", "owner": "${project.user}", "group": "${project.user}" }
 
 - name: Pull source from the repository
   git: repo=${project.repo} dest=${project.root}/webapp/ version=${project.revision} update=yes force=yes
