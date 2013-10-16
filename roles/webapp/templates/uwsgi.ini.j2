@@ -1,9 +1,9 @@
 [uwsgi]
 # Django-related settings
-env = DJANGO_SETTINGS_MODULE=configs.{{ project.environment }}.settings
+env = DJANGO_SETTINGS_MODULE=pyconfigs.settings
 
 # the base directory (full path)
-chdir           = {{ project.root }}/webapp
+chdir           = {{ project.root }}/webapp/mailytics
 # Django's wsgi file
 module          = pyconfigs.wsgi
 # the virtualenv (full path)

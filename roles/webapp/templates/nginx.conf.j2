@@ -1,0 +1,63 @@
+upstream uwsgi_pool {
+    server  unix:{{ project.root }}/uwsgi.sock;
+}
+
+server {
+    listen 10.2.2.22:80;
+
+    server_name localhost;
+    rewrite ^/(.*)$ https://localhost/$1 permanent;
+}
+
+server {
+    listen 10.2.2.22:443 ssl;
+    server_name localhost;
+
+    # Safe default
+    client_max_body_size 1m;
+
+    ssl_certificate       {{ project.root }}/private/localhost.crt;
+    ssl_certificate_key   {{ project.root }}/private/localhost.key;
+
+    ssl_session_cache    shared:SSL:20m;
+    ssl_session_timeout  30m;
+    ssl_protocols  SSLv3 TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-ECDSA-RC4-SHA:ECDHE-RSA-RC4-SHA:ECDH-ECDSA-RC4-SHA:ECDH-RSA-RC4-SHA:ECDHE-RSA-AES256-SHA:RC4-SHA:HIGH:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!CBC:!EDH:!kEDH:!PSK:!SRP:!kECDH;
+    ssl_prefer_server_ciphers on;
+
+    add_header Strict-Transport-Security "max-age=5184000; includeSubDomains";
+    add_header X-Frame-Options SAMEORIGIN;
+
+    # IE only
+    add_header X-XSS-Protection "1; mode=block";
+    add_header X-Content-Type-Options nosniff;
+
+    # User uploaded files
+    location ~* ^/upfiles/(.+\.(?:jpe?g|gif|png|ico|css|zip|tgz|gz|rar|bz2|doc|xls|exe|pdf|ppt|txt|tar|mid|midi|wav|bmp|rtf|js|swf|avi|mp3|mkv|mp4))$ {
+        alias {{ project.root }}/uploads/$1;
+        access_log      off;
+        log_not_found   off;
+        expires         30d;
+    }
+
+    # Collected static files
+    location ~* ^/static/(.+\.(?:jpe?g|gif|png|ico|css|zip|tgz|gz|rar|bz2|doc|xls|exe|pdf|ppt|txt|tar|mid|midi|wav|bmp|rtf|js|swf|avi|mp3|svg|ttf|eot|woff|mkv|mp4))$ {
+        alias {{ project.root }}/webapp/mailytics/static/$1;
+        access_log      off;
+        log_not_found   off;
+        expires         30d;
+    }
+
+    location ^~ /admin/ {
+        auth_basic            "Restricted Area";
+        auth_basic_user_file  ${project.root}/private/htpasswd-admin;
+
+        uwsgi_pass uwsgi_pool;
+        include {{ project.root }}/configs/uwsgi_params;
+    }
+
+    location / {
+        uwsgi_pass uwsgi_pool;
+        include {{ project.root }}/configs/uwsgi_params;
+    }
+}

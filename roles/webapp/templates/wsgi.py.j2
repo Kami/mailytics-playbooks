@@ -1,14 +1,6 @@
 import os
-import sys
 
-from os.path import join as pjoin
-
-# Put the Django project on system path
-current_path = os.path.dirname(__file__)
-
-sys.path.insert(0, os.path.abspath(pjoin(current_path, '../../')))
-
-os.environ['HOME'] = '{{ project.root }}'
+os.environ['HOME'] = '{{ project.root }}/webapp/mailytics'
 os.environ['DJANGO_SETTINGS_MODULE'] = 'pyconfigs.settings'
 os.environ['LANG'] = 'en_US.UTF-8'
 os.environ['LC_ALL'] = 'en_US.UTF-8'

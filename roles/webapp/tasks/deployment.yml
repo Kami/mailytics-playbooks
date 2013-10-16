@@ -11,20 +11,31 @@
     - { "name": "logs", "mode": "0744"}
     - { "name": "virtualenv", "mode": "0744"}
     - { "name": "configs", "mode": "0744"}
+    - { "name": "pyconfigs", "mode": "0744"}
     - { "name": "private", "mode": "0440"}
     - { "name": "webapp", "mode": "0744"}
     - { "name": "static", "mode": "0744"}
     - { "name": "uploads", "mode": "0744"}
 
-- name: Change permissions for private directory
-  file: state=directory path=${project.root}/private/ owner=${project.user} group=${project.user} mode=0440
-
-- name: Install secret files
-  copy: src=${project.environment}/${item} dest=${project.root}/private/${item} owner=${project.user} group=${project.user} mode=0440
+- name: Install private webserver files
+  copy: src=${project.environment}/${item} dest=${project.root}/private/${item} owner=${project.www_user} group=${project.www_group} mode=0440
   with_items:
     - htpasswd-admin
     - localhost.crt
     - localhost.key
+
+- name: Install Python configs
+  action: template src=${item.src} dest=${project.root}/pyconfigs/${item.dest} owner=${project.user} group=${project.user}
+  with_items:
+    - { "src": "__init__.py.j2", "dest": "__init__.py" }
+    - { "src": "settings.py.j2", "dest": "settings.py" }
+    - { "src": "wsgi.py.j2", "dest": "wsgi.py" }
+
+- name: Install uwsgi_params file
+  copy: src=uwsgi_params dest=${project.root}/configs/uwsgi_params owner=${project.www_user} group=${project.www_group}
+
+- name: Install nginx config
+  action: template src=nginx.conf.j2 dest=/etc/nginx/conf.d/mailytics.conf owner=root group=root
 
 - name: Install supervisor config
   action: template src=supervisor.conf.j2 dest=/etc/supervisor/conf.d/${project.name}.conf
@@ -48,5 +59,6 @@
   shell: ${project.root}/virtualenv/bin/python ${project.root}/webapp/mailytics/configs/${project.environment}/manage.py migrate --noinput
   notify:
     - reload supervisor
+    - reload nginx
     - start uwsgi process
     - touch uwsgi deployment file
