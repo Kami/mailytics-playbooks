@@ -22,3 +22,8 @@ config:
   commitlog_directory: '/var/lib/cassandra/commitlog'
   saved_caches_directory: '/var/lib/cassandra/saved_caches'
   log_level: 'info'
+
+postgresql:
+  version: 9.2
+  repo: 'deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main'
+  install_development_headers: true
