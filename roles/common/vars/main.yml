@@ -1,6 +1,7 @@
 ---
 common:
   packages:
+    - curl
     - htop
     - iftop
     - screen
