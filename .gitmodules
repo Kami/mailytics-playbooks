@@ -4,3 +4,6 @@
 [submodule "roles/postgresql"]
 	path = roles/postgresql
 	url = git@github.com:Kami/ansible-postgresql.git
+[submodule "roles/memcached"]
+	path = roles/memcached
+	url = git@github.com:Kami/ansible-memcached.git
