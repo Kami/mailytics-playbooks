@@ -13,6 +13,10 @@
     - configs
     - webapp
     - static
+    - uploads
+
+- name: Install admin htpasswd file
+  copy: src=${project.environment}/.htpasswd-admin dest=${project.root}/configs/.htpasswd-admin
 
 - name: Install supervisor config
   action: template src=supervisor.conf.j2 dest=/etc/supervisor/conf.d/${project.name}.conf
