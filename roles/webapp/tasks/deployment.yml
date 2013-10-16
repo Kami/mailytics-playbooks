@@ -11,7 +11,6 @@
     - { "name": "logs", "mode": "0755"}
     - { "name": "virtualenv", "mode": "0755"}
     - { "name": "configs", "mode": "0755"}
-    - { "name": "pyconfigs", "mode": "0755"}
     - { "name": "private", "mode": "0411"}
     - { "name": "webapp", "mode": "0755"}
     - { "name": "static", "mode": "0755"}
@@ -25,10 +24,9 @@
     - localhost.key
 
 - name: Install Python configs
-  action: template src=${item.src} dest=${project.root}/pyconfigs/${item.dest} owner=${project.user} group=${project.user}
+  action: template src=${item.src} dest=${project.root}/webapp/mailytics/configs/${item.dest} owner=${project.user} group=${project.user}
   with_items:
-    - { "src": "__init__.py.j2", "dest": "__init__.py" }
-    - { "src": "settings.py.j2", "dest": "settings.py" }
+    - { "src": "settings.py.j2", "dest": "local_settings.py" }
     - { "src": "wsgi.py.j2", "dest": "wsgi.py" }
 
 - name: Install uwsgi_params file
@@ -50,13 +48,19 @@
   pip: requirements=${project.root}/webapp/requirements.txt virtualenv=${project.root}/virtualenv
 
 - name: Collect static files
-  shell: ${project.root}/virtualenv/bin/python ${project.root}/webapp/mailytics/configs/${project.environment}/manage.py collectstatic --noinput
+  shell: ${project.root}/virtualenv/bin/python ${project.root}/webapp/mailytics/manage.py collectstatic --noinput
+  environment:
+    DJANGO_SETTINGS_MODULE: "${project.settings_module}"
 
 - name: Sync database
-  shell: ${project.root}/virtualenv/bin/python ${project.root}/webapp/mailytics/configs/${project.environment}/manage.py syncdb --noinput
+  shell: ${project.root}/virtualenv/bin/python ${project.root}/webapp/mailytics/manage.py syncdb --noinput
+  environment:
+    DJANGO_SETTINGS_MODULE: "${project.settings_module}"
 
 - name: Migrate database
-  shell: ${project.root}/virtualenv/bin/python ${project.root}/webapp/mailytics/configs/${project.environment}/manage.py migrate --noinput
+  shell: ${project.root}/virtualenv/bin/python ${project.root}/webapp/mailytics/manage.py migrate --noinput
+  environment:
+    DJANGO_SETTINGS_MODULE: "${project.settings_module}"
   notify:
     - reload supervisor
     - reload nginx

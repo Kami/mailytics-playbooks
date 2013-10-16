@@ -1,11 +1,14 @@
 ---
 project:
-  repo: git@github.com:Kami/mailytics-webapp.git
-  root: /data-deploy/mailytics
   name: mailytics_webapp
   user: mailyticswebapp
+
+  repo: git@github.com:Kami/mailytics-webapp.git
+  root: /data-deploy/mailytics
+
   environment: development
   revision: master
+  settings_module: configs.local_settings
 
   www_user: nginx
   www_group: nginx
