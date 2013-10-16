@@ -7,11 +7,15 @@
   with_items:
     - logs
     - virtualenv
+    - configs
     - webapp
     - static
 
 - name: Install supervisor config
-  action: template src=supervisor.j2 dest=/etc/supervisor/conf.d/${project.name}.conf
+  action: template src=supervisor.conf.j2 dest=/etc/supervisor/conf.d/${project.name}.conf
+
+- name: Install uwsgi config
+  action: template src=uwsgi.ini.j2 dest=${project.root}/configs/uwsgi.ini
 
 - name: Pull source from the repository
   git: repo=${project.repo} dest=${project.root}/webapp/ version=${project.revision} update=yes force=yes
@@ -28,4 +32,6 @@
 - name: Migrate database
   shell: ${project.root}/virtualenv/bin/python ${project.root}/webapp/mailytics/configs/${project.environment}/manage.py migrate --noinput
   notify:
+    - reload supervisor
+    - start uwsgi process
     - touch uwsgi deployment file
