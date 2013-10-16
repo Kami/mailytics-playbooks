@@ -3,22 +3,22 @@
   user: name=${project.user} state=present
 
 - name: Create main project directory
-  file: state=directory path=${project.root} owner=${project.user} group=${project.user}
+  file: state=directory path=${project.root} owner=${project.user} group=${project.user} mode=0755
 
 - name: Create project directories
   file: state=directory path=${project.root}/${item.name}/ owner=${project.user} group=${project.user} mode=${item.mode}
   with_items:
-    - { "name": "logs", "mode": "0744"}
-    - { "name": "virtualenv", "mode": "0744"}
-    - { "name": "configs", "mode": "0744"}
-    - { "name": "pyconfigs", "mode": "0744"}
-    - { "name": "private", "mode": "0440"}
-    - { "name": "webapp", "mode": "0744"}
-    - { "name": "static", "mode": "0744"}
-    - { "name": "uploads", "mode": "0744"}
+    - { "name": "logs", "mode": "0755"}
+    - { "name": "virtualenv", "mode": "0755"}
+    - { "name": "configs", "mode": "0755"}
+    - { "name": "pyconfigs", "mode": "0755"}
+    - { "name": "private", "mode": "0411"}
+    - { "name": "webapp", "mode": "0755"}
+    - { "name": "static", "mode": "0755"}
+    - { "name": "uploads", "mode": "0755"}
 
 - name: Install private webserver files
-  copy: src=${project.environment}/${item} dest=${project.root}/private/${item} owner=${project.www_user} group=${project.www_group} mode=0440
+  copy: src=${project.environment}/${item} dest=${project.root}/private/${item} owner=${project.www_user} group=${project.www_group} mode=0400
   with_items:
     - htpasswd-admin
     - localhost.crt
