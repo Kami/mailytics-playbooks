@@ -1,6 +1,6 @@
 [uwsgi]
 # Django-related settings
-env = DJANGO_SETTINGS_MODULE=configs.{{ environment }}.settings
+env = DJANGO_SETTINGS_MODULE=configs.{{ project.environment }}.settings
 
 # the base directory (full path)
 chdir           = {{ project.root }}/webapp
