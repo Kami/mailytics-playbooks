@@ -1,10 +1,4 @@
 ---
-- name: Install nginx
-  apt: name=nginx state=present
 
-- name: Copy nginx configuration file
-  template: src=default.conf dest=/etc/nginx/conf.d/default.conf
-  notify: restart nginx
-
-- name: Copy .htaccess file
-  copy: src=.htpasswd dest=/etc/nginx/conf.d/.htpasswd
+- include: repository.yml
+- include: nginx.yml

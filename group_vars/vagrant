@@ -30,3 +30,7 @@ postgresql:
 
 memcached:
   install_development_headers: true
+
+nginx:
+  version: 1.4.3-1~precise
+  repo: 'deb http://nginx.org/packages/ubuntu/ precise nginx'

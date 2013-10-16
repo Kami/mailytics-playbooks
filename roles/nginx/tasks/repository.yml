@@ -1,0 +1,15 @@
+---
+- name: Install python-software-properties
+  apt: pkg=python-software-properties state=installed update-cache=yes
+  tags:
+    - apt
+
+- name: Add repository key
+  apt_key: data="{{ lookup('file', 'ABF5BD827BD9BF62.gpg') }}"  state=present
+  tags:
+    - apt
+
+- name: Add apt repository
+  apt_repository: repo='${nginx.repo}' state=present
+  tags:
+    - apt
