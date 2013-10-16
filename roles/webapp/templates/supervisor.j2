@@ -1,12 +1,12 @@
 [program:mailytics_webapp_prod_uwsgi]
-command={{ project_root }}/virtualenv/bin/uwsgi --ini /var/www/domains/coachspree.com/releases/current/coachspree/configs/production/uwsgi.ini
+command={{ project.root }}/virtualenv/bin/uwsgi --ini /var/www/domains/coachspree.com/releases/current/coachspree/configs/production/uwsgi.ini
 
-environment=PYTHONPATH='{{ project_root }}/webapp',PATH='{{ project_root }}/virtualenv/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/bin:/sbin'
-directory={{ project_root }}/webapp
+environment=PYTHONPATH='{{ project.root }}/webapp',PATH='{{ project.root }}/virtualenv/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/bin:/sbin'
+directory={{ project.root }}/webapp
 
-user={{ project_user }}
+user={{ project.user }}
 numprocs=1
-stdout_logfile={{ project_root }}/logs/uwsgi.log
-stderr_logfile={{ project_root }}/logs/uwsgi.log
+stdout_logfile={{ project.root }}/logs/uwsgi.log
+stderr_logfile={{ project.root }}/logs/uwsgi.log
 autostart=true
 autorestart=true

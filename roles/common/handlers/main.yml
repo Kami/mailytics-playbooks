@@ -3,4 +3,4 @@
   shell: /usr/bin/supervisorctl reread && /usr/bin/supervisorctl update
 
 - name: restart supervised processes
-  shell: /usr/bin/supervisorctl restart ${project_name}
+  shell: /usr/bin/supervisorctl restart ${project.name}

@@ -3,7 +3,7 @@
   action: service name=supervisor state=reloaded
 
 - name: restart uwsgi processes
-  supervisorctl: name=${project_name}_uwsgi state=restarted config=/var/opt/my_project/supervisord.conf
+  supervisorctl: name=${project.name}_uwsgi state=restarted config=/var/opt/my_project/supervisord.conf
 
 - name: touch uwsgi deployment file
-  shell: touch ${project_root}/deployment
+  shell: touch ${project.root}/deployment

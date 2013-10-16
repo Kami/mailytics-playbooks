@@ -1,7 +1,8 @@
 ---
-project_repo: git@github.com:Kami/mailytics-webapp.git
-project_root: /data/mailytics
-project_name: mailytics
-project_user: mailyticswebapp
-environment: production
-revision: master
+project:
+  repo: git@github.com:Kami/mailytics-webapp.git
+  root: /data-deploy/mailytics
+  name: mailytics
+  user: mailyticswebapp
+  environment: production
+  revision: master
