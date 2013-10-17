@@ -12,3 +12,10 @@ project:
 
   www_user: nginx
   www_group: nginx
+
+  database:
+    name: mailytics
+    user: mailyticswebapp
+
+    host: 127.0.0.1
+    port: 6432

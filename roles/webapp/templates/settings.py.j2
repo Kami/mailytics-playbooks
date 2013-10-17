@@ -1,1 +1,15 @@
 from configs.settings import *
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': '{{ project.database.name }}',
+        'USER': '{{ project.database.user }}',
+        'PASSWORD': config.DATABASE_PASSWORD,
+        'HOST': '{{ project.database.host }}',
+        'PORT': '{{ project.database.port }}',
+        'OPTIONS': {
+            'autocommit': True,
+        }
+    }
+}
