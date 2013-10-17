@@ -1,3 +1,5 @@
 *.key filter=encrypt diff=encrypt
+userlist.txt filter=encrypt diff=encrypt
+
 [merge]
     renormalize=true
