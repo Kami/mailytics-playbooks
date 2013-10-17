@@ -1,0 +1,14 @@
+---
+- name: 'Web servers setup'
+  hosts: web_servers
+  user: vagrant
+  sudo: true
+
+  roles:
+    - ntpd
+    - common
+    - roles/postgresql/roles/postgresql
+    - roles/postgresql/roles/pgbouncer
+    - roles/memcached/roles/memcached
+    - nginx
+    - webapp
