@@ -1,15 +1,4 @@
 ---
-- name: Create user account
-  user: name=${project.user} state=present shell=/bin/bash
-
-- name: Create ~/.ssh directory
-  file: path=/home/${project.user}/.ssh state=directory
-
-- name: Install private SSH key
-  copy: src=id_rsa.key dest=/home/${project.user}/.ssh/id_rsa mode=0600
-
-- name: Ensure virtualenv is installed and latest version
-  pip: name=virtualenv
-
-- name: Install pgbouncer
-  apt: pkg=pgbouncer state=installed update-cache=yes
+- include: setup.yml
+- include: pgbouncer.yml
+- include: database.yml

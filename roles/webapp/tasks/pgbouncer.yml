@@ -1,0 +1,5 @@
+---
+- name: Install pgbouncer userlist
+  copy: src=${project.environment}/userlist.txt dest=/etc/pgbouncer/userlist.txt mode=0440 owner=postgres group=postgres
+  notify:
+    - restart pgbouncer

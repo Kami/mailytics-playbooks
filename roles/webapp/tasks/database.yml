@@ -1,0 +1,13 @@
+---
+- name: Install psycopg2 package
+  apt: pkg=python-psycopg2 state=installed update-cache=yes
+  tags:
+    - packages
+
+- name: Create user
+  postgresql_user: user=vagrant password=dev
+  sudo_user: postgres
+
+- name: Create database
+  postgresql_db: name=mailytics owner=vagrant encoding="UTF-8" lc_collate="en_US.UTF-8" lc_ctype="en_US.UTF-8" template="template0"
+  sudo_user: postgres
