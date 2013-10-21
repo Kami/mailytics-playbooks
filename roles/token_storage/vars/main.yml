@@ -1,0 +1,10 @@
+---
+project:
+  name: mailytics_token_storage
+  user: mailyticstokenstorage
+
+  repo: git@github.com:Kami/mailytics-services.git
+  root: /data-deploy/mailytics-token-storage
+
+  environment: development
+  revision: master
