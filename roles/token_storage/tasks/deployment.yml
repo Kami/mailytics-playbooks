@@ -1,0 +1,35 @@
+---
+- name: Create main project directory
+  file: state=directory path=${project.root} owner=${project.user} group=${project.user} mode=0755
+
+- name: Create project directories
+  file: state=directory path=${project.root}/${item.name}/ owner=${project.user} group=${project.user} mode=${item.mode}
+  with_items:
+    - { "name": "logs", "mode": "0755"}
+    - { "name": "virtualenv", "mode": "0755"}
+    - { "name": "data", "mode": "0411"}
+    - { "name": "private", "mode": "0411"}
+
+- name: Pull source from the repository
+  git: repo=${project.repo} dest=${project.root}/code/ version=${project.revision} update=yes force=yes
+
+- name: Install requirements
+  pip: requirements=${project.root}/code/requirements.txt virtualenv=${project.root}/virtualenv
+
+- name: Install certificate files
+  copy: src=${project.environment}/${item} dest=${project.root}/private/${item} owner=${project.user} group=${project.group} mode=0400
+  with_items:
+    - ca.crt
+    - server.crt
+    - server.key
+  notify:
+    - restart token storage set service
+    - restart token storage get service
+
+- name: Install templatized config files
+  action: template src=${item.src} dest=${item.dest} owner=${item.owner} group=${item.group}
+  with_items:
+    - { "src": "supervisor.conf.j2", "dest": "/etc/supervisor/conf.d/${project.name}.conf", "owner": "root", "group": "root" }
+  notify:
+    - restart token storage set service
+    - restart token storage get service

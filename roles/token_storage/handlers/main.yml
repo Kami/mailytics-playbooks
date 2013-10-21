@@ -1,0 +1,6 @@
+---
+- name: restart token storage set service
+  supervisorctl: name=token_storage_set_service state=restarted
+
+- name: restart token storage get service
+  supervisorctl: name=token_storage_get_service state=restarted
