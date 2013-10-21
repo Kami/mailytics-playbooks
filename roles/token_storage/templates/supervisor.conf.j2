@@ -1,4 +1,4 @@
-[progam:token_storage_set_service]
+[program:mailytics_token_storage_set_service]
 command={{ project.root }}/virtualenv/bin/python {{ project.root }}/code/bin/token-storage-set-server
 
 environment=PYTHONPATH='{{ project.root }}/code',PATH='{{ project.root }}/virtualenv/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/bin:/sbin'
@@ -10,8 +10,7 @@ stdout_logfile={{ project.root }}/logs/token_storage_set.log
 stderr_logfile={{ project.root }}/logs/token_storage_set.log
 autostart=true
 autorestart=true
-
-[progam:token_storage_get_service]
+[program:mailytics_token_storage_get_service]
 command={{ project.root }}/virtualenv/bin/python {{ project.root }}/code/bin/token-storage-get-server
 
 environment=PYTHONPATH='{{ project.root }}/code',PATH='{{ project.root }}/virtualenv/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/bin:/sbin'
