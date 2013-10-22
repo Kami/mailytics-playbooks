@@ -16,13 +16,20 @@
 - name: Install requirements
   pip: requirements=${project.root}/code/requirements.txt virtualenv=${project.root}/virtualenv
 
+- name: Make sure database file exists
+  shell: ${project.root}/code/scripts/create-schema.sh ${project.root}/data/database.sqlite
+
+- name: Make sure database file is only readable by owner
+  file: path=${project.root}/data/database.sqlite owner=${project.user} group=${project.user} mode=0400
+
 - name: Install certificate files
-  copy: src=${project.environment}/${item} dest=${project.root}/private/${item} owner=${project.user} group=${project.group} mode=0400
+  copy: src=${project.environment}/${item} dest=${project.root}/private/${item} owner=${project.user} group=${project.user} mode=0400
   with_items:
     - ca.crt
     - server.crt
     - server.key
   notify:
+    - reload supervisor
     - restart token storage set service
     - restart token storage get service
 
@@ -31,5 +38,6 @@
   with_items:
     - { "src": "supervisor.conf.j2", "dest": "/etc/supervisor/conf.d/${project.name}.conf", "owner": "root", "group": "root" }
   notify:
+    - reload supervisor
     - restart token storage set service
     - restart token storage get service
