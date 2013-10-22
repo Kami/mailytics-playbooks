@@ -1,5 +1,5 @@
 [program:mailytics_token_storage_set_service]
-command={{ project.root }}/virtualenv/bin/python {{ project.root }}/code/bin/token-storage-set-server --database_path={{ project.root }}/data/database.sqlite
+command={{ project.root }}/virtualenv/bin/python {{ project.root }}/code/bin/token-storage-set-server {{ project.service_args }}
 
 environment=PYTHONPATH='{{ project.root }}/code',PATH='{{ project.root }}/virtualenv/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/bin:/sbin'
 directory={{ project.root }}/code
@@ -11,7 +11,7 @@ stderr_logfile={{ project.root }}/logs/token_storage_set.log
 autostart=true
 autorestart=true
 [program:mailytics_token_storage_get_service]
-command={{ project.root }}/virtualenv/bin/python {{ project.root }}/code/bin/token-storage-get-server --database_path={{ project.root }}/data/database.sqlite
+command={{ project.root }}/virtualenv/bin/python {{ project.root }}/code/bin/token-storage-get-server {{ project.service_args }}
 
 environment=PYTHONPATH='{{ project.root }}/code',PATH='{{ project.root }}/virtualenv/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/bin:/sbin'
 directory={{ project.root }}/code

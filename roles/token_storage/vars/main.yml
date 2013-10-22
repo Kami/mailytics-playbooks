@@ -8,3 +8,5 @@ project:
 
   environment: development
   revision: master
+
+  service_args: --database_path=${project.root}/data/database.sqlite --ca_file=${project.root}/private/ca.crt --cert_file=${project.root}/private/server.crt --key_file=${project.root}/private/server.key
