@@ -7,3 +7,6 @@
 [submodule "roles/memcached"]
 	path = roles/memcached
 	url = git@github.com:Kami/ansible-memcached.git
+[submodule "roles/redis"]
+	path = roles/redis
+	url = git@github.com:Kami/ansible-redis.git
