@@ -5,7 +5,7 @@
     - packages
 
 - name: Create user
-  postgresql_user: user=vagrant password=${project.database.password}
+  postgresql_user: user=${project.database.user} password=${project.database.password}
   sudo_user: postgres
 
 - name: Create database
