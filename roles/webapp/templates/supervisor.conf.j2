@@ -1,7 +1,7 @@
 [program:mailytics_webapp_uwsgi]
 command={{ project.root }}/virtualenv/bin/uwsgi --ini {{ project.root }}/configs/uwsgi.ini
 
-environment=PYTHONPATH='{{ project.root }}/webapp/mailytics',PATH='{{ project.root }}/virtualenv/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/bin:/sbin'
+environment=PYTHONPATH='{{ project.root }}/webapp/mailytics:/data-deploy/mailytics-token-storage/code/',PATH='{{ project.root }}/virtualenv/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/bin:/sbin'
 directory={{ project.root }}/webapp
 
 user={{ project.user }}

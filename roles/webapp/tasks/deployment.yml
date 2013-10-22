@@ -55,16 +55,19 @@
   shell: ${project.root}/virtualenv/bin/python ${project.root}/webapp/mailytics/manage.py collectstatic --noinput
   environment:
     DJANGO_SETTINGS_MODULE: "${project.settings_module}"
+    PYTHONPATH: "/data-deploy/mailytics-token-storage/code/"
 
 - name: Sync database
   shell: ${project.root}/virtualenv/bin/python ${project.root}/webapp/mailytics/manage.py syncdb --noinput
   environment:
     DJANGO_SETTINGS_MODULE: "${project.settings_module}"
+    PYTHONPATH: "/data-deploy/mailytics-token-storage/code/"
 
 - name: Migrate database
   shell: ${project.root}/virtualenv/bin/python ${project.root}/webapp/mailytics/manage.py migrate --noinput
   environment:
     DJANGO_SETTINGS_MODULE: "${project.settings_module}"
+    PYTHONPATH: "/data-deploy/mailytics-token-storage/code/"
   notify:
     - reload supervisor
     - reload nginx
