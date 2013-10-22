@@ -90,3 +90,9 @@ redis:
       - 900 1
       - 300 10
       - 60 10000
+
+iptables:
+  incoming_whitelist:
+    - { "port": 2222, "type": "tcp" }
+    - { "port": 80, "type": "tcp" }
+    - { "port": 443, "type": "tcp" }
