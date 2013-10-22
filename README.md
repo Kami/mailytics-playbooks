@@ -10,4 +10,4 @@
 ## Development environment information
 
 * Webapp admin panel - admin / admin
-* Pgbouncer user - vagrant / dev
+* Pgbouncer user - mailyticswebapp / dev
