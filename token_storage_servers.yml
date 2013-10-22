@@ -1,0 +1,13 @@
+---
+- name: 'Token storage servers setup'
+  hosts: token_storage_servers
+  user: vagrant
+  sudo: true
+
+  roles:
+    - ntpd
+    - common
+    - token_storage
+
+  #tasks:
+  #  - include: roles/token_storage/tasks/deployment.yml
