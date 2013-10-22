@@ -9,7 +9,7 @@
     - { "name": "virtualenv", "mode": "0755"}
     - { "name": "data", "mode": "0711"}
     - { "name": "backups", "mode": "0711"}
-    - { "name": "private", "mode": "0411"}
+    - { "name": "private", "mode": "0511"}
 
 - name: Pull source from the repository
   git: repo=${project.repo} dest=${project.root}/code/ version=${project.revision} update=yes force=yes
