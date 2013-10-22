@@ -7,7 +7,7 @@
   with_items:
     - { "name": "logs", "mode": "0755"}
     - { "name": "virtualenv", "mode": "0755"}
-    - { "name": "data", "mode": "0411"}
+    - { "name": "data", "mode": "0711"}
     - { "name": "private", "mode": "0411"}
 
 - name: Pull source from the repository
@@ -18,9 +18,13 @@
 
 - name: Make sure database file exists
   shell: ${project.root}/code/scripts/create-schema.sh ${project.root}/data/database.sqlite
+  notify:
+    - reload supervisor
+    - restart token storage set service
+    - restart token storage get service
 
-- name: Make sure database file is only readable by owner
-  file: path=${project.root}/data/database.sqlite owner=${project.user} group=${project.user} mode=0400
+- name: Make sure database file is only readable & writable by owner
+  file: path=${project.root}/data/database.sqlite owner=${project.user} group=${project.user} mode=0700
 
 - name: Install certificate files
   copy: src=${project.environment}/${item} dest=${project.root}/private/${item} owner=${project.user} group=${project.user} mode=0400
