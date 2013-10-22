@@ -1,3 +1,4 @@
+# {{ ansible_managed }}
 from configs.settings import *
 
 DATABASES = {
@@ -5,7 +6,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': '{{ project.database.name }}',
         'USER': '{{ project.database.user }}',
-        'PASSWORD': config.DATABASE_PASSWORD,
+        'PASSWORD': '{{ project.database.password }}',
         'HOST': '{{ project.database.host }}',
         'PORT': '{{ project.database.port }}',
         'OPTIONS': {
@@ -13,3 +14,12 @@ DATABASES = {
         }
     }
 }
+
+# Token storage service settings
+TOKEN_STORAGE_SERVERS = [
+    'https://127.0.0.1:7878/'
+]
+
+TOKEN_STORAGE_CA_CERT = '{{ project.root }}/private/ca.crt'
+TOKEN_STORAGE_CLIENT_CERT = '{{ project.root }}/private/client.crt'
+TOKEN_STORAGE_CLIENT_KEY = '{{ project.root }}/private/client.key'
