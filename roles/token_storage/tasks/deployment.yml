@@ -8,6 +8,7 @@
     - { "name": "logs", "mode": "0755"}
     - { "name": "virtualenv", "mode": "0755"}
     - { "name": "data", "mode": "0711"}
+    - { "name": "backups", "mode": "0711"}
     - { "name": "private", "mode": "0411"}
 
 - name: Pull source from the repository
@@ -15,6 +16,9 @@
 
 - name: Install requirements
   pip: requirements=${project.root}/code/requirements.txt virtualenv=${project.root}/virtualenv
+
+- name: Create database backup
+  shell: "${project.root}/code/scripts/backup-database.sh ${project.root}/data/database.sqlite ${project.root}/backups/backup-$(date +%s).sqlite"
 
 - name: Make sure database file exists
   shell: ${project.root}/code/scripts/create-schema.sh ${project.root}/data/database.sqlite
@@ -25,6 +29,14 @@
 
 - name: Make sure database file is only readable & writable by owner
   file: path=${project.root}/data/database.sqlite owner=${project.user} group=${project.user} mode=0700
+
+- name: List backup files
+  shell: ls -1 ${project.root}/backups/*
+  register: backup_files
+
+- name: Make sure backups are only readable by the owner
+  file: path=${item} owner=${project.user} group=${project.user} mode=0400
+  with_items: ${backup_files.stdout_lines}
 
 - name: Install certificate files
   copy: src=${project.environment}/${item} dest=${project.root}/private/${item} owner=${project.user} group=${project.user} mode=0400
