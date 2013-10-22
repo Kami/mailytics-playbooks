@@ -1,3 +1,6 @@
 ---
+- name: reload iptables
+  shell: /sbin/iptables-restore -! < /etc/iptables.rules
+
 - name: reload supervisor
   shell: /usr/bin/supervisorctl reread && /usr/bin/supervisorctl update
