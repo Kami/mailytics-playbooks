@@ -20,6 +20,9 @@
 - name: Create database backup
   shell: "${project.root}/code/scripts/backup-database.sh ${project.root}/data/database.sqlite ${project.root}/backups/backup-$(date +%s).sqlite"
 
+- name: Delete old backups (keep last 5)
+  shell: "ls -dt ${project.root}/backups/* | tail -n +6 | xargs rm -rf"
+
 - name: Make sure database file exists
   shell: ${project.root}/code/scripts/create-schema.sh ${project.root}/data/database.sqlite
   notify:
