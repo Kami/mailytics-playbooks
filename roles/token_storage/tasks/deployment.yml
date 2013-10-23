@@ -13,6 +13,10 @@
 
 - name: Pull source from the repository
   git: repo=${project.repo} dest=${project.root}/code/ version=${project.revision} update=yes force=yes
+  notify:
+    - reload supervisor
+    - restart token storage set service
+    - restart token storage get service
 
 - name: Install requirements
   pip: requirements=${project.root}/code/requirements.txt virtualenv=${project.root}/virtualenv
