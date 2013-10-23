@@ -42,7 +42,7 @@ server {
 
     # Collected static files
     location ~* ^/static/(.+\.(?:jpe?g|gif|png|ico|css|zip|tgz|gz|rar|bz2|doc|xls|exe|pdf|ppt|txt|tar|mid|midi|wav|bmp|rtf|js|swf|avi|mp3|svg|ttf|eot|woff|mkv|mp4))$ {
-        alias {{ project.root }}/webapp/mailytics/static/$1;
+        alias {{ project.root }}/code/mailytics/static/$1;
         access_log      off;
         log_not_found   off;
         expires         30d;
