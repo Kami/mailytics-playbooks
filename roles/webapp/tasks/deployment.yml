@@ -37,13 +37,16 @@
     - { "src": "nginx.conf.j2", "dest": "${project.root}/configs/nginx.conf", "owner": "root", "group": "root" }
     - { "src": "supervisor.conf.j2", "dest": "${project.root}/configs/supervisor.conf", "owner": "root", "group": "root" }
     - { "src": "uwsgi.ini.j2", "dest": "${project.root}/configs/uwsgi.ini", "owner": "${project.user}", "group": "${project.user}" }
+  notify:
+    - reload supervisor
+    - reload nginx
+    - start uwsgi process
+    - touch uwsgi deployment file
 
 - name: Pull source from the repository
   git: repo=${project.repo} dest=${project.root}/code/ version=${project.revision} update=yes force=yes
   notify:
     - reload supervisor
-    - reload nginx
-    - start uwsgi process
     - touch uwsgi deployment file
 
 - name: Symlink configs
