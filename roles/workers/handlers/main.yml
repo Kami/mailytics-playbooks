@@ -1,0 +1,6 @@
+---
+- name: restart celery workers
+  supervisorctl: name=mailytics_workers state=restarted
+
+- name: restart celery beat
+  supervisorctl: name=mailytics_workers_celery_beat state=restarted
