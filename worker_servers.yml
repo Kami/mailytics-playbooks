@@ -1,0 +1,14 @@
+---
+- name: 'Worker servers setup'
+  hosts: worker_servers
+  user: vagrant
+  sudo: true
+
+  roles:
+    - ntpd
+    - common
+    - roles/redis/roles/redis
+    - workers
+
+  tasks:
+    - include: roles/workers/tasks/deployment.yml
