@@ -9,7 +9,6 @@
     - { "name": "virtualenv", "mode": "0755"}
     - { "name": "configs", "mode": "0755"}
     - { "name": "private", "mode": "0511"}
-    - { "name": "webapp", "mode": "0755"}
     - { "name": "static", "mode": "0755"}
     - { "name": "uploads", "mode": "0755"}
 
@@ -40,31 +39,31 @@
     - { "src": "uwsgi.ini.j2", "dest": "${project.root}/configs/uwsgi.ini", "owner": "${project.user}", "group": "${project.user}" }
 
 - name: Pull source from the repository
-  git: repo=${project.repo} dest=${project.root}/webapp/ version=${project.revision} update=yes force=yes
+  git: repo=${project.repo} dest=${project.root}/code/ version=${project.revision} update=yes force=yes
 
 - name: Symlink Python configs
   file: src=${item.src} dest=${item.dest} state=link force=yes
   with_items:
-    - { "src": "${project.root}/configs/settings.py", "dest": "${project.root}/webapp/mailytics/configs/local_settings.py" }
-    - { "src": "${project.root}/configs/wsgi.py", "dest": "${project.root}/webapp/mailytics/configs/wsgi.py" }
+    - { "src": "${project.root}/configs/settings.py", "dest": "${project.root}/code/mailytics/configs/local_settings.py" }
+    - { "src": "${project.root}/configs/wsgi.py", "dest": "${project.root}/code/mailytics/configs/wsgi.py" }
 
 - name: Install requirements
-  pip: requirements=${project.root}/webapp/requirements.txt virtualenv=${project.root}/virtualenv
+  pip: requirements=${project.root}/code/requirements.txt virtualenv=${project.root}/virtualenv
 
 - name: Collect static files
-  shell: ${project.root}/virtualenv/bin/python ${project.root}/webapp/mailytics/manage.py collectstatic --noinput
+  shell: ${project.root}/virtualenv/bin/python ${project.root}/code/mailytics/manage.py collectstatic --noinput
   environment:
     DJANGO_SETTINGS_MODULE: "${project.settings_module}"
     PYTHONPATH: "/data-deploy/mailytics-token-storage/code/"
 
 - name: Sync database
-  shell: ${project.root}/virtualenv/bin/python ${project.root}/webapp/mailytics/manage.py syncdb --noinput
+  shell: ${project.root}/virtualenv/bin/python ${project.root}/code/mailytics/manage.py syncdb --noinput
   environment:
     DJANGO_SETTINGS_MODULE: "${project.settings_module}"
     PYTHONPATH: "/data-deploy/mailytics-token-storage/code/"
 
 - name: Migrate database
-  shell: ${project.root}/virtualenv/bin/python ${project.root}/webapp/mailytics/manage.py migrate --noinput
+  shell: ${project.root}/virtualenv/bin/python ${project.root}/code/mailytics/manage.py migrate --noinput
   environment:
     DJANGO_SETTINGS_MODULE: "${project.settings_module}"
     PYTHONPATH: "/data-deploy/mailytics-token-storage/code/"
