@@ -1,6 +1,7 @@
 ---
 common:
   packages:
+    - build-essential
     - curl
     - htop
     - vim
