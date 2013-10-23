@@ -1,5 +1,5 @@
 [program:mailytics_workers]
-command={{ project.root }}/virtualenv/bin/python {{ project.root }}/virtualenv/bin/celery worker --app=workers --loglevel=DEBUG  --pidfile={{ project.root }}/data/celeryworkers.pid
+command={{ project.root }}/virtualenv/bin/python {{ project.root }}/virtualenv/bin/celery worker --app=workers --loglevel=DEBUG --pidfile={{ project.root }}/data/celeryworkers.pid
 
 environment=PYTHONPATH='{{ project.root }}/code:/data-deploy/mailytics-token-storage/code/',PATH='{{ project.root }}/virtualenv/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/bin:/sbin'
 directory={{ project.root }}/code
@@ -11,7 +11,7 @@ autostart=true
 autorestart=true
 
 [program:mailytics_workers_celery_beat]
-command={{ project.root }}/virtualenv/bin/python {{ project.root }}/virtualenv/bin/celery beat --app=workers --loglevel=DEBUG --pidfile={{ project.root }}/data/celerybeat.pid
+command={{ project.root }}/virtualenv/bin/python {{ project.root }}/virtualenv/bin/celery beat --app=workers --loglevel=DEBUG --pidfile={{ project.root }}/data/celerybeat.pid --schedule={{ project.root }}/data/schedule.db
 
 environment=PYTHONPATH='{{ project.root }}/code:/data-deploy/mailytics-token-storage/code/',PATH='{{ project.root }}/virtualenv/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/bin:/sbin'
 directory={{ project.root }}/code
