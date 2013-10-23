@@ -1,0 +1,24 @@
+[program:mailytics_workers]
+command={{ project.root }}/virtualenv/bin/python {{ project.root }}/virtualenv/bin/celery worker --app=workers --loglevel=DEBUG
+
+environment=PYTHONPATH='{{ project.root }}/code',PATH='{{ project.root }}/virtualenv/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/bin:/sbin'
+directory={{ project.root }}/code
+user={{ project.user }}
+numprocs=1
+stdout_logfile={{ project.root }}/logs/celery_workers.log
+stderr_logfile={{ project.root }}/logs/celery_workers.log
+autostart=true
+autorestart=true
+
+[program:mailytics_workers_celery_beat]
+command={{ project.root }}/virtualenv/bin/python {{ project.root }}/virtualenv/bin/celery beat --app=workers --loglevel=DEBUG
+
+environment=PYTHONPATH='{{ project.root }}/code',PATH='{{ project.root }}/virtualenv/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/bin:/sbin'
+directory={{ project.root }}/code
+
+user={{ project.user }}
+numprocs=1
+stdout_logfile={{ project.root }}/logs/celery_beat.log
+stderr_logfile={{ project.root }}/logs/celery_beat.log
+autostart=true
+autorestart=true
