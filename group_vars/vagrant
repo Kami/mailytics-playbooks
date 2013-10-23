@@ -93,6 +93,7 @@ redis:
 
 iptables:
   incoming_whitelist:
+    - { "port": 8000, "type": "tcp" }
     - { "port": 2222, "type": "tcp" }
     - { "port": 80, "type": "tcp" }
     - { "port": 443, "type": "tcp" }
