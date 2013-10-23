@@ -6,4 +6,5 @@
   supervisorctl: name=${project.name}_uwsgi state=started
 
 - name: touch uwsgi deployment file
-  file: path=${project.root}/deployment state=touch
+  shell: touch ${project.root}/deployment
+  #file: path=${project.root}/deployment state=touch
