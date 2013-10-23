@@ -7,6 +7,7 @@
   with_items:
     - { "name": "logs", "mode": "0755"}
     - { "name": "virtualenv", "mode": "0755"}
+    - { "name": "configs", "mode": "0755"}
     - { "name": "data", "mode": "0711"}
     - { "name": "backups", "mode": "0711"}
     - { "name": "private", "mode": "0511"}
@@ -59,8 +60,13 @@
 - name: Install templatized config files
   action: template src=${item.src} dest=${item.dest} owner=${item.owner} group=${item.group}
   with_items:
-    - { "src": "supervisor.conf.j2", "dest": "/etc/supervisor/conf.d/${project.name}.conf", "owner": "root", "group": "root" }
+    - { "src": "supervisor.conf.j2", "dest": "${project.root}/configs/supervisor.conf", "owner": "root", "group": "root" }
   notify:
     - reload supervisor
     - restart token storage set service
     - restart token storage get service
+
+- name: Symlink configs
+  file: src=${item.src} dest=${item.dest} state=link force=yes
+  with_items:
+    - { "src": "${project.root}/configs/supervisor.conf", "dest": "/etc/supervisor/conf.d/${project.name}.conf" }
