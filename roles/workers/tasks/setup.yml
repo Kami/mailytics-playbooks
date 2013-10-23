@@ -1,0 +1,19 @@
+---
+- name: Create user account
+  user: name=${project.user} state=present shell=/bin/bash
+
+- name: Create ~/.ssh directory
+  file: path=/home/${project.user}/.ssh state=directory
+
+- name: Install private SSH key
+  copy: src=../../../files/id_rsa.key dest=/home/${project.user}/.ssh/id_rsa mode=0600
+
+- name: Ensure virtualenv is installed and latest version
+  pip: name=virtualenv
+
+- name: Install required packages
+  apt: pkg=${item} state=installed update-cache=yes
+  with_items:
+    - libsnappy-dev # needed for cassandra client compression
+  tags:
+    - packages

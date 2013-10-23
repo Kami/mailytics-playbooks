@@ -1,0 +1,10 @@
+---
+project:
+  name: mailytics_workers
+  user: mailyticsworkers
+
+  repo: git@github.com:Kami/mailytics-workers.git
+  root: /data-deploy/mailytics-workers
+
+  environment: development
+  revision: master
