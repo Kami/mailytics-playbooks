@@ -1,6 +1,7 @@
 *.key filter=encrypt diff=encrypt
 *.crt filter=encrypt diff=encrypt
 userlist.txt filter=encrypt diff=encrypt
+client_secrets.json filter=encrypt diff=encrypt
 
 [merge]
     renormalize=true
