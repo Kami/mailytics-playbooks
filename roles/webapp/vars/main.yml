@@ -4,7 +4,7 @@ project:
   user: mailyticswebapp
 
   repo: git@github.com:Kami/mailytics-webapp.git
-  root: /data-deploy/mailytics
+  root: /data-deploy/mailytics-webapp
 
   environment: development
   revision: master
