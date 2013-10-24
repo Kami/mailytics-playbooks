@@ -12,3 +12,6 @@
     - roles/memcached/roles/memcached
     - nginx
     - webapp
+
+  tasks:
+    - include: roles/webapp/tasks/deployment.yml

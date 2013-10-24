@@ -9,5 +9,5 @@
     - common
     - token_storage
 
-  #tasks:
-  #  - include: roles/token_storage/tasks/deployment.yml
+  tasks:
+    - include: roles/token_storage/tasks/deployment.yml
