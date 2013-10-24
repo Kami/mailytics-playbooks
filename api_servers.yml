@@ -1,0 +1,13 @@
+---
+- name: 'API servers setup'
+  hosts: api_servers
+  user: vagrant
+  sudo: true
+
+  roles:
+    - ntpd
+    - common
+    - api_service
+
+  tasks:
+    - include: roles/api_service/tasks/deployment.yml
