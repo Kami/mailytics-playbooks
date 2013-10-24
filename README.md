@@ -17,8 +17,8 @@
 ### Using django runserver for rapid iteration
 
 ```bash
-source /data-deploy/mailytics/virtualenv/bin/activate
-cd /data/mailytics/webapp
+source /data-deploy/mailytics-webapp/virtualenv/bin/activate
+cd /data/mailytics-webapp/code
 ./scripts/flush-db.sh
 python mailytics/manage.py runserver 0.0.0.0:8000
 ```
