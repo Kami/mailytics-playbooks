@@ -1,0 +1,3 @@
+---
+- name: restart api service
+  supervisorctl: name=mailytics_api_service state=restarted

@@ -1,0 +1,12 @@
+---
+project:
+  name: mailytics_api_service
+  user: mailyticsapi
+
+  repo: git@github.com:Kami/mailytics-workers.git
+  root: /data-deploy/mailytics-api
+
+  environment: development
+  revision: master
+
+  service_args: --port=9999

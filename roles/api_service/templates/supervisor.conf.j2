@@ -1,0 +1,11 @@
+[program:mailytics_api_service]
+command={{ project.root }}/virtualenv/bin/python {{ project.root }}/code/api_server/server.py {{ project.service_args }}
+
+environment=PYTHONPATH='{{ project.root }}/code',PATH='{{ project.root }}/virtualenv/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/bin:/sbin'
+directory={{ project.root }}/code
+user={{ project.user }}
+numprocs=1
+stdout_logfile={{ project.root }}/logs/api_service.log
+stderr_logfile={{ project.root }}/logs/api_service.log
+autostart=true
+autorestart=true
