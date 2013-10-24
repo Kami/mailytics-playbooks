@@ -19,12 +19,13 @@
     - localhost.crt
     - localhost.key
 
-- name: Install certificate files
+- name: Install private files
   copy: src=${project.environment}/${item} dest=${project.root}/private/${item} owner=${project.user} group=${project.user} mode=0400
   with_items:
     - ca.crt
     - client.crt
     - client.key
+    - client_secrets.json
   notify:
     - touch uwsgi deployment file
 
@@ -40,7 +41,6 @@
   notify:
     - reload supervisor
     - reload nginx
-    - start uwsgi process
     - touch uwsgi deployment file
 
 - name: Pull source from the repository
