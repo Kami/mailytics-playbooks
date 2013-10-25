@@ -18,7 +18,7 @@
 
 ```bash
 source /data-deploy/mailytics-webapp/virtualenv/bin/activate
-cd /data/mailytics-webapp/code
+cd /data/mailytics/webapp
 ./scripts/flush-db.sh
 python mailytics/manage.py runserver 0.0.0.0:8000
 ```
