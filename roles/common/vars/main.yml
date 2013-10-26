@@ -8,6 +8,7 @@ common:
     - iftop
     - screen
     - git
+    - mercurial
     - supervisor
     - python
     - python-dev
