@@ -15,6 +15,9 @@ DATABASES = {
     }
 }
 
+# django-pipeline
+PIPELINE_YUGLIFY_BINARY = '{{ project.root }}/code/node_modules/yuglify/bin/yuglify'
+
 # Google Oauth settings
 OAUTH_REDIRECT_URL = 'https://mailytics.info/oauth2/callback'
 CLIENT_SECRETS_FILE = '{{ project.root }}/private/client_secrets.json'
