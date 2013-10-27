@@ -1,0 +1,18 @@
+---
+- name: Install python-software-properties
+  apt: pkg=python-software-properties state=installed update-cache=yes
+  tags:
+    - apt
+
+- name: Add chris-lea PPA
+  apt_repository: repo=ppa:chris-lea/node.js
+  tags:
+    - apt
+
+- name: Install Node.js and npm
+  apt: pkg={{ item }}=0.10.21-1chl1~precise1 state=installed update-cache=yes
+  register: redis_install
+  with_items:
+    - nodejs
+  tags:
+    - apt
