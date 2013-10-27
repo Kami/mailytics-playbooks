@@ -60,6 +60,10 @@
 - name: Install requirements
   pip: requirements=${project.root}/code/requirements.txt virtualenv=${project.root}/virtualenv
 
+- name: Install Node.js dependencies
+  #sudo_user: ${project.user}
+  shell: npm install chdir=${project.root}/code/
+
 - name: Collect static files
   shell: ${project.root}/virtualenv/bin/python ${project.root}/code/mailytics/manage.py collectstatic --noinput
   environment:
