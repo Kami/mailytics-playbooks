@@ -2,8 +2,14 @@
 *.crt filter=encrypt diff=encrypt
 userlist.txt filter=encrypt diff=encrypt
 client_secrets.json filter=encrypt diff=encrypt
-public_keys/* filter=encrypt diff=encrypt
-private_keys/* filter=encrypt diff=encrypt
+
+# Keyczar files
+meta filter=encrypt diff=encrypt
+1 filter=encrypt diff=encrypt
+2 filter=encrypt diff=encrypt
+3 filter=encrypt diff=encrypt
+4 filter=encrypt diff=encrypt
+5 filter=encrypt diff=encrypt
 
 [merge]
     renormalize=true

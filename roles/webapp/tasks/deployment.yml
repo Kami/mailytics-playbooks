@@ -9,6 +9,7 @@
     - { "name": "virtualenv", "mode": "0755"}
     - { "name": "configs", "mode": "0755"}
     - { "name": "private", "mode": "0511"}
+    - { "name": "private/public_keys/", "mode": "0511"}
     - { "name": "static", "mode": "0755"}
     - { "name": "uploads", "mode": "0755"}
 
@@ -26,6 +27,8 @@
     - client.crt
     - client.key
     - client_secrets.json
+    - public_keys/meta
+    - public_keys/1
   notify:
     - touch uwsgi deployment file
 
